@@ -1,7 +1,7 @@
 package com.amr.restfuldb.rest;
 
-import com.amr.restfuldb.dao.EmployeeDAO;
 import com.amr.restfuldb.entity.Employee;
+import com.amr.restfuldb.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,16 +13,15 @@ import java.util.List;
 @RequestMapping("/api")
 public class EmployeeRestController {
 
-    // quick and dirty:  inject employee dao ( use constructor injection )
+    private final EmployeeService employeeService;
 
-    private final EmployeeDAO employeeDAO;
-
-    public EmployeeRestController(EmployeeDAO employeeDAO) {
-        this.employeeDAO = employeeDAO;
+    @Autowired
+    public EmployeeRestController(EmployeeService employeeService) {
+        this.employeeService = employeeService;
     }
 
     @GetMapping("/employees")
     public List<Employee> findAll() {
-        return employeeDAO.findAll();
+        return employeeService.findAll();
     }
 }
